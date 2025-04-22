@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Forecast</title>
+    <style>
+        body {
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+
+        input[type="text"] {
+            width: 80%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid green;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #weatherInfo {
+            margin-top: 20px;
+            font-size: 16px;
+            text-align: left;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-radius: 4px;
+        }
+
+        p {
+            margin: 5px 0;
+        }
+        table {
+            margin-top: 20px;
+            border-collapse: collapse;
+            width: 80%;
+            max-width: 600px;
+            background: white;
+            box-shadow: 0 0 5px rgba(0,0,0,0.1);
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <input type = "text" id = "weather" placeholder="Enter City Name">
+    <button onclick="getWeather()">Get Info</button>
+    <table>
+        <thead>
+        <tr>
+            <th>Date</th>
+            <th>Temperature</th>
+        </tr>
+        </thead>
+
+        <tbody id = "bd">
+        </tbody>
+    </table>
+
+    <script>
+        async function getWeather(){
+            const city = document.getElementById("weather").value;
+            const appId = 'f91c450278ba41d39f00463998e9ceab';
+            const url = https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${appId}&units=metric;
+            const response = await fetch(url);
+            const data = await response.json();
+            const list = data.list;
+            for(let i = 0;i<list.length;i+=8){
+                const date = new Date(list[i].dt * 1000);
+                const formatted = date.toLocaleString();
+                const row = `
+                <tr>
+                    <td>${formatted}</td>
+                    <td>${list[i].main.temp}</td>
+                </tr>
+                `
+                document.getElementById("bd").innerHTML += row;
+            }
+        }
+    </script>
+</body>
+</html>
