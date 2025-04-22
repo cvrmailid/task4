@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Information</title>
+    <style>
+        body {
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+
+        input[type="text"] {
+            width: 80%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid green;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #weatherInfo {
+            margin-top: 20px;
+            font-size: 16px;
+            text-align: left;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-radius: 4px;
+        }
+
+        p {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <input type = "text" id = "weather" placeholder="Enter City Name">
+    <button onclick="getWeather()">Get Info</button>
+    <div id = "weatherInfo"></div>
+
+    <script>
+        async function getWeather(){
+            const city = document.getElementById("weather").value;
+            const appId = 'f91c450278ba41d39f00463998e9ceab';
+            const url = https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${appId}&units=metric;
+            const response = await fetch(url);
+            const data = await response.json();
+            document.getElementById("weatherInfo").innerHTML = `
+            <p>City: ${city}</p>
+            <p>Temperature: ${data.main.temp}</p>
+            <p>Min Temperture: ${data.main.temp_min}</p>
+            <p>Max Temperture: ${data.main.temp_max}</p>
+            <p>Humidity: ${data.main.humidity}</p>
+            `
+        }
+    </script>
+</body>
+</html>
